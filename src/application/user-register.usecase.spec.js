@@ -1,3 +1,4 @@
+const AppError = require("../shared/errors/AppError.js");
 const registerUserUseCase = require("./user-register.usecase.js");
 
 describe("Register user UseCase", function () {
@@ -22,6 +23,8 @@ describe("Register user UseCase", function () {
   });
 
   test("Must return a throw AppError if the userRepository is not provided", function () {
-    expect(() => registerUserUseCase({})).toThrow("userRepository not found");
+    expect(() => registerUserUseCase({})).toThrow(
+      new AppError(AppError.dependencies)
+    );
   });
 });
