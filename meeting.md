@@ -34,3 +34,7 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 [] Mostrar todos os empréstimos pendentes, com o nome do livro, nome do usuário, CPF, data de saída e data de retorno. Ordenados pela data de retorno mais antinga
 
 ## Estruturas
+
+## UsersRepository
+
+[] register: ({nome_completo, CPF, telefone, endereco, email}) => Promise<void>

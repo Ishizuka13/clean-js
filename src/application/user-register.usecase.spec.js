@@ -20,4 +20,8 @@ describe("Register user UseCase", function () {
     expect(usersRepository.register).toHaveBeenCalledWith(userDTO);
     expect(usersRepository.register).toHaveBeenCalledTimes(1);
   });
+
+  test("Must return a throw AppError if the userRepository is not provided", function () {
+    expect(() => registerUserUseCase({})).toThrow("userRepository not found");
+  });
 });
