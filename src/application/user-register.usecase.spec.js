@@ -1,4 +1,5 @@
 const AppError = require("../shared/errors/AppError.js");
+const userRegisterUsecase = require("./user-register.usecase.js");
 const registerUserUseCase = require("./user-register.usecase.js");
 
 describe("Register user UseCase", function () {
@@ -25,6 +26,12 @@ describe("Register user UseCase", function () {
   test("Must return a throw AppError if the userRepository is not provided", function () {
     expect(() => registerUserUseCase({})).toThrow(
       new AppError(AppError.dependencies)
+    );
+  });
+  test("Must return a throw AppError if the required inputs are not provided", async function () {
+    const sut = userRegisterUsecase({ usersRepository });
+    await expect(() => sut({})).rejects.toThrow(
+      new AppError(AppError.requiredParams)
     );
   });
 });
