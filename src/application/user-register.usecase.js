@@ -7,6 +7,12 @@ module.exports = function userRegisterUseCase({ usersRepository }) {
     const checkedInputs = nome_completo && CPF && telefone && endereco && email;
 
     if (!checkedInputs) throw new AppError(AppError.requiredParams);
+
+    const checkIfTheCPFIsAlreadyRegistered = await usersRepository.foundCPF(
+      CPF
+    );
+    if (checkIfTheCPFIsAlreadyRegistered)
+      throw new AppError("CPF already registered");
     await usersRepository.register({
       nome_completo,
       CPF,

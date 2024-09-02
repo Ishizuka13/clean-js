@@ -5,6 +5,7 @@ const registerUserUseCase = require("./user-register.usecase.js");
 describe("Register user UseCase", function () {
   const usersRepository = {
     register: jest.fn(),
+    foundCPF: jest.fn(),
   };
 
   test("Must register a user", async function () {
@@ -32,6 +33,22 @@ describe("Register user UseCase", function () {
     const sut = userRegisterUsecase({ usersRepository });
     await expect(() => sut({})).rejects.toThrow(
       new AppError(AppError.requiredParams)
+    );
+  });
+
+  test("Must return a throw AppErro if already exists a register of the CPF", function () {
+    usersRepository.foundCPF.mockResolvedValue(true);
+    const userDTO = {
+      nome_completo: "nome_valido",
+      CPF: "CPF_ja_cadastrado",
+      telefone: "telefone_valido",
+      endereco: "endereco_valido",
+      email: "email_valido",
+    };
+
+    const sut = userRegisterUsecase({ usersRepository });
+    expect(() => sut(userDTO)).rejects.toThrow(
+      new AppError("CPF already registered")
     );
   });
 });
