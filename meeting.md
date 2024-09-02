@@ -10,8 +10,8 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 
 ## UseCases (Regras de negócio)
 
-[] Cadastrar um novo usuário
-[] CPF ou email devem ser únicos
+[x] Cadastrar um novo usuário
+[x] CPF ou email devem ser únicos
 
 [] Buscar um cadastro de usuário por CPF
 [] - Retornar um usuário vazio
@@ -38,3 +38,5 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 ## UsersRepository
 
 [] register: ({nome_completo, CPF, telefone, endereco, email}) => Promise<void>
+[] foundCPF(CPF) => Promise<boolean>
+[] foundByEmail(email) => Promise<boolean>

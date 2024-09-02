@@ -2,17 +2,17 @@
  * @description: ALERT: this class must be instanced directly, use one of the methods Left or Right
  */
 
-module.exports = class Eihter {
+module.exports = class Either {
   constructor(left, right) {
     this.left = left;
     this.right = right;
   }
 
   static Left(left) {
-    return new Eihter(left, null);
+    return new Either(left, null);
   }
   static Right(right) {
-    return new Eihter(null, right);
+    return new Either(null, right);
   }
 
   static valueAlreadyRegistered(value) {

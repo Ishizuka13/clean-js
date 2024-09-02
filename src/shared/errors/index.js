@@ -1,4 +1,4 @@
 const AppError = require("./AppError");
-const Eihter = require("./Either");
+const Either = require("./Either");
 
-module.exports = { AppError, Eihter };
+module.exports = { AppError, Either };

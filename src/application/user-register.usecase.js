@@ -1,4 +1,4 @@
-const { Eihter } = require("../shared/errors");
+const { Either } = require("../shared/errors");
 const AppError = require("../shared/errors/AppError");
 
 module.exports = function userRegisterUseCase({ usersRepository }) {
@@ -13,7 +13,13 @@ module.exports = function userRegisterUseCase({ usersRepository }) {
       CPF
     );
     if (checkIfTheCPFIsAlreadyRegistered)
-      return Eihter.Left(Eihter.valueAlreadyRegistered("CPF"));
+      return Either.Left(Either.valueAlreadyRegistered("CPF"));
+
+    const checkIfTheEmailIsAlreadyRegistered = await usersRepository.foundEmail(
+      email
+    );
+    if (checkIfTheEmailIsAlreadyRegistered)
+      return Either.Left(Either.valueAlreadyRegistered("Email"));
     await usersRepository.register({
       nome_completo,
       CPF,
@@ -22,6 +28,6 @@ module.exports = function userRegisterUseCase({ usersRepository }) {
       email,
     });
 
-    return Eihter.Right(null);
+    return Either.Right(null);
   };
 };
