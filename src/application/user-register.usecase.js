@@ -1,3 +1,4 @@
+const { Eihter } = require("../shared/errors");
 const AppError = require("../shared/errors/AppError");
 
 module.exports = function userRegisterUseCase({ usersRepository }) {
@@ -12,7 +13,7 @@ module.exports = function userRegisterUseCase({ usersRepository }) {
       CPF
     );
     if (checkIfTheCPFIsAlreadyRegistered)
-      throw new AppError("CPF already registered");
+      return Eihter.Left(Eihter.valueAlreadyRegistered("CPF"));
     await usersRepository.register({
       nome_completo,
       CPF,
@@ -20,5 +21,7 @@ module.exports = function userRegisterUseCase({ usersRepository }) {
       endereco,
       email,
     });
+
+    return Eihter.Right(null);
   };
 };

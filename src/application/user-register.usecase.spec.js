@@ -1,4 +1,5 @@
 const AppError = require("../shared/errors/AppError.js");
+const Eihter = require("../shared/errors/Either.js");
 const userRegisterUsecase = require("./user-register.usecase.js");
 const registerUserUseCase = require("./user-register.usecase.js");
 
@@ -19,7 +20,7 @@ describe("Register user UseCase", function () {
     const sut = registerUserUseCase({ usersRepository });
     const output = await sut(userDTO);
 
-    expect(output).toBeUndefined();
+    expect(output.right).toBeNull();
     expect(usersRepository.register).toHaveBeenCalledWith(userDTO);
     expect(usersRepository.register).toHaveBeenCalledTimes(1);
   });
@@ -36,7 +37,7 @@ describe("Register user UseCase", function () {
     );
   });
 
-  test("Must return a throw AppErro if already exists a register of the CPF", function () {
+  test("Must return a throw AppErro if already exists a register of the CPF", async function () {
     usersRepository.foundCPF.mockResolvedValue(true);
     const userDTO = {
       nome_completo: "nome_valido",
@@ -47,8 +48,10 @@ describe("Register user UseCase", function () {
     };
 
     const sut = userRegisterUsecase({ usersRepository });
-    expect(() => sut(userDTO)).rejects.toThrow(
-      new AppError("CPF already registered")
-    );
+    const output = await sut(userDTO);
+    expect(output.right).toBeNull();
+    expect(output.left).toEqual(Eihter.valueAlreadyRegistered("CPF"));
+    expect(usersRepository.foundCPF).toHaveBeenCalledWith(userDTO.CPF);
+    expect(usersRepository.foundCPF).toHaveBeenCalledTimes(1);
   });
 });
