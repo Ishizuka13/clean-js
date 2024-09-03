@@ -6,7 +6,7 @@ describe("Search user by CPF UseCase", function () {
   };
 
   test("Must return a user when CPF is registered", async function () {
-    const cpfDTO = -{
+    const cpfDTO = {
       CPF: "CPF_cadastrado",
     };
 
@@ -24,7 +24,21 @@ describe("Search user by CPF UseCase", function () {
     const output = await sut(cpfDTO);
 
     expect(output.right).toEqual(outputDTO);
-    expect(usersRepository.searchByCPF).toHaveBeenCalledWith(cpfDTO.cpf);
+    expect(usersRepository.searchByCPF).toHaveBeenCalledWith(cpfDTO.CPF);
+    expect(usersRepository.searchByCPF).toHaveBeenCalledTimes(1);
+  });
+
+  test("Must return null if there is no CPF registered", async function () {
+    usersRepository.searchByCPF.mockResolvedValue(null);
+    const cpfDTO = {
+      CPF: "CPF_nao_cadastrado",
+    };
+
+    const sut = searchUserByCpfUsecase({ usersRepository });
+    const output = await sut(cpfDTO);
+
+    expect(output.right).toBeNull();
+    expect(usersRepository.searchByCPF).toHaveBeenCalledWith(cpfDTO.CPF);
     expect(usersRepository.searchByCPF).toHaveBeenCalledTimes(1);
   });
 });
