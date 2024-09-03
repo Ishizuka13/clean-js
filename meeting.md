@@ -13,8 +13,8 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 [x] Cadastrar um novo usuário
 [x] CPF ou email devem ser únicos
 
-[] Buscar um cadastro de usuário por CPF
-[] - Retornar um usuário vazio
+[x] Buscar um cadastro de usuário por CPF
+[x] - Retornar um usuário vazio
 
 [] Cadastrar um novo livro
 [] - ISBN deve ser único

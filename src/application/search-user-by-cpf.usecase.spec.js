@@ -13,7 +13,7 @@ describe("Search user by CPF UseCase", function () {
 
     const outputDTO = {
       id: "qualquer_ID",
-      name: "qualquer_nome",
+      nome: "qualquer_nome",
       CPF: "CPF_cadastrado",
       telefone: "qualquer_telefone",
       email: "qualquer_email",
