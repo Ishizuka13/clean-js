@@ -1,3 +1,4 @@
+const { AppError } = require("../shared/errors");
 const searchUserByCpfUsecase = require("./search-user-by-cpf.usecase");
 
 describe("Search user by CPF UseCase", function () {
@@ -40,5 +41,19 @@ describe("Search user by CPF UseCase", function () {
     expect(output.right).toBeNull();
     expect(usersRepository.searchByCPF).toHaveBeenCalledWith(cpfDTO.CPF);
     expect(usersRepository.searchByCPF).toHaveBeenCalledTimes(1);
+  });
+
+  test("Must return a throw AppError if usersRepository is not provided", async function () {
+    expect(() => searchUserByCpfUsecase({})).toThrow(
+      new AppError(AppError.dependencies)
+    );
+  });
+
+  test("Must return a throw AppError if CPF input is not provided", async function () {
+    const sut = searchUserByCpfUsecase({ usersRepository });
+
+    expect(() => sut({})).rejects.toThrow(
+      new AppError(AppError.requiredParams)
+    );
   });
 });
