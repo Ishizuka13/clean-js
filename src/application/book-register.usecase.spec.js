@@ -1,3 +1,4 @@
+const { AppError } = require("../shared/errors");
 const bookRegisterUsecase = require("./book-register.usecase");
 
 describe("Book register UseCase", function () {
@@ -20,5 +21,11 @@ describe("Book register UseCase", function () {
     expect(output.right).toBeNull();
     expect(booksRepository.register).toHaveBeenLastCalledWith(livroDTO);
     expect(booksRepository.register).toHaveBeenCalledTimes(1);
+  });
+
+  test("Must return a throw AppError if the book is not provided", function () {
+    expect(() => bookRegisterUsecase({})).toThrow(
+      new AppError(AppError.dependencies)
+    );
   });
 });
