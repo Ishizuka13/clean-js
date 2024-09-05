@@ -28,4 +28,11 @@ describe("Book register UseCase", function () {
       new AppError(AppError.dependencies)
     );
   });
+
+  test("Must return a throw AppError if the required inputs are not provided", async function () {
+    const sut = bookRegisterUsecase({ booksRepository });
+    await expect(() => sut({})).rejects.toThrow(
+      new AppError(AppError.requiredParams)
+    );
+  });
 });
