@@ -16,7 +16,7 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 [x] Buscar um cadastro de usuário por CPF
 [x] - Retornar um usuário vazio
 
-[] Cadastrar um novo livro
+[x] Cadastrar um novo livro
 [] - ISBN deve ser único
 
 [] Buscar um livro por nome ou ISBN
@@ -40,3 +40,7 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 [] register: ({nome_completo, CPF, telefone, endereco, email}) => Promise<void>
 [] foundCPF(CPF) => Promise<boolean>
 [] foundByEmail(email) => Promise<boolean>
+
+## booksRepository
+
+[] cadastrar: ({nome, quantidade, autor, genero, ISBN}) => Promise<void>

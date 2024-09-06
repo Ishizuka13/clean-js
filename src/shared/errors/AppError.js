@@ -5,5 +5,5 @@ module.exports = class AppError extends Error {
   }
 
   static dependencies = "A required dependency was not provided";
-  static requiredParams = "A required param was not provideds";
+  static requiredParams = "A required param was not provided";
 };
