@@ -17,7 +17,7 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 [x] - Retornar um usuário vazio
 
 [x] Cadastrar um novo livro
-[] - ISBN deve ser único
+[x] - ISBN deve ser único
 
 [] Buscar um livro por nome ou ISBN
 [] - Retornar os livros ou vazio
@@ -43,4 +43,5 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 
 ## booksRepository
 
-[] cadastrar: ({nome, quantidade, autor, genero, ISBN}) => Promise<void>
+[] register: ({nome, quantidade, autor, genero, ISBN}) => Promise<void>
+[] foundByISBN: (ISBN) => Promise<boolean>

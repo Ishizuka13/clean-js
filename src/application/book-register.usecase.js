@@ -4,8 +4,6 @@ module.exports = function bookRegisterUseCase({ booksRepository }) {
   if (!booksRepository) throw new AppError(AppError.dependencies);
   return async function ({ nome, quantidade, autor, genero, ISBN }) {
     const checkedInputs = nome && quantidade && autor && genero && ISBN;
-    console.log(nome, ISBN, quantidade, autor, genero);
-    console.log(checkedInputs);
 
     if (!checkedInputs) throw new AppError(AppError.requiredParams);
 
