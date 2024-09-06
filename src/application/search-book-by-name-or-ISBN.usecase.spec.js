@@ -30,4 +30,19 @@ describe("Search books by name or ISBN UseCase", function () {
     );
     expect(booksRepository.searchBookByNameOrISBN).toHaveBeenCalledTimes(1);
   });
+
+  test("Must return a null array when the name or ISBN does not exists", async function () {
+    const nomeISBNDTO = {
+      valor: "valor_nao_cadastrado",
+    };
+    booksRepository.searchBookByNameOrISBN.mockResolvedValue([]);
+    const sut = searchBookByNameOrISBNUsecase({ booksRepository });
+    const output = await sut(nomeISBNDTO);
+
+    expect(output.right).toEqual([]);
+    expect(booksRepository.searchBookByNameOrISBN).toHaveBeenCalledWith(
+      nomeISBNDTO.valor
+    );
+    expect(booksRepository.searchBookByNameOrISBN).toHaveBeenCalledTimes(1);
+  });
 });
