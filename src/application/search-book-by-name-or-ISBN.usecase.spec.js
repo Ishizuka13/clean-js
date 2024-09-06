@@ -1,3 +1,4 @@
+const { AppError } = require("../shared/errors");
 const searchBookByNameOrISBNUsecase = require("./search-book-by-name-or-ISBN.usecase");
 
 describe("Search books by name or ISBN UseCase", function () {
@@ -44,5 +45,18 @@ describe("Search books by name or ISBN UseCase", function () {
       nomeISBNDTO.valor
     );
     expect(booksRepository.searchBookByNameOrISBN).toHaveBeenCalledTimes(1);
+  });
+
+  test("Must return a throw AppError if the booksRepository is not provided", function () {
+    expect(() => searchBookByNameOrISBNUsecase({})).toThrow(
+      new AppError(AppError.dependencies)
+    );
+  });
+
+  test("Must return a throw AppError if the required input is not provided", async function () {
+    const sut = searchBookByNameOrISBNUsecase({ booksRepository });
+    await expect(() => sut({})).rejects.toThrow(
+      new AppError(AppError.requiredParams)
+    );
   });
 });
