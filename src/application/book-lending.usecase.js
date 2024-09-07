@@ -14,7 +14,7 @@ module.exports = function lendBookUseCase({ lendsRepository }) {
       });
 
     if (existsPendentUserLendedBookISBN)
-      return Either.bookWithISBNIsPendentByUser;
+      return Either.Left(Either.bookWithISBNIsPendentByUser);
     await lendsRepository.lend({
       usuario_id,
       livro_id,

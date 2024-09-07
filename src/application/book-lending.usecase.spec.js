@@ -38,4 +38,28 @@ describe("Lend book UseCase", function () {
     // expect(lendsRepository.lend).toHaveBeenCalledWith(lendDTO);
     // expect(lendsRepository.lend).toHaveBeenCalledTimes(1);
   });
+
+  test("Must not allow the lending of a book with the same ISBN to the same user before the book has been returned", async function () {
+    lendsRepository.existsPendentUserLendedBookISBN.mockResolvedValue(true);
+    const lendDTO = {
+      livro_id: "qualquer_livro_id",
+      usuario_id: "qualquer_usuario_id",
+      data_saida: new Date("2024-02-16"),
+      data_retorno: new Date("2024-02-16"),
+    };
+
+    const sut = lendBookUseCase({ lendsRepository });
+    const output = await sut(lendDTO);
+
+    expect(output.left).toBe(Either.bookWithISBNIsPendentByUser);
+    expect(
+      lendsRepository.existsPendentUserLendedBookISBN
+    ).toHaveBeenCalledWith({
+      livro_id: lendDTO.livro_id,
+      usuario_id: lendDTO.usuario_id,
+    });
+    expect(
+      lendsRepository.existsPendentUserLendedBookISBN
+    ).toHaveBeenCalledTimes(1);
+  });
 });
