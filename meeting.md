@@ -45,3 +45,10 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 
 [] register: ({nome, quantidade, autor, genero, ISBN}) => Promise<void>
 [] foundByISBN: (ISBN) => Promise<boolean>
+
+## lendsRepository
+
+[] lend({ livro_id
+usuario_id
+data_saida
+data_retorno}) => Promise<void>

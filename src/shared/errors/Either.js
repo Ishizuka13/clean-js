@@ -18,4 +18,12 @@ module.exports = class Either {
   static valueAlreadyRegistered(value) {
     return { message: `${value} already registered` };
   }
+  static ReturnDateLowerThanQuitDate() {
+    return { message: "Data retorno menor do que saída" };
+  }
+  static bookWithISBNIsPendentByUser() {
+    return {
+      message: "Livro com ISBN já emprestado ao usuário e não retornado ainda.",
+    };
+  }
 };
