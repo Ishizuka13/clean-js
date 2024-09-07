@@ -1,4 +1,4 @@
-const { Either } = require("../shared/errors");
+const { Either, AppError } = require("../shared/errors");
 const lendBookUseCase = require("./book-lending.usecase");
 
 describe("Lend book UseCase", function () {
@@ -61,5 +61,18 @@ describe("Lend book UseCase", function () {
     expect(
       lendsRepository.existsPendentUserLendedBookISBN
     ).toHaveBeenCalledTimes(1);
+  });
+
+  test("Must return a throw AppError if the lendsRepository is not provided", function () {
+    expect(() => lendBookUseCase({})).toThrow(
+      new AppError(AppError.dependencies)
+    );
+  });
+
+  test("Must return a throw AppError if a required inputs is not provided", async function () {
+    const sut = lendBookUseCase({ lendsRepository });
+    await expect(() => sut({})).rejects.toThrow(
+      new AppError(AppError.requiredParams)
+    );
   });
 });

@@ -24,8 +24,8 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 
 [x] Emprestar um livro ao usuário
 [x] - A data de retorno não pode ser menor que a data de saída
-[] - Um usuário não pode estar com mais de um livro com o mesmo ISBN ao mesmo tempo
-[] - Um usuário pode estar com mais de um livro com ISBN diferentes ao mesmo tempo
+[x] - Um usuário não pode estar com mais de um livro com o mesmo ISBN ao mesmo tempo
+[x] - Um usuário pode estar com mais de um livro com ISBN diferentes ao mesmo tempo
 [] - Ao cadastrar um empréstimo, será enviado um email automaticamente informando o nome do livro, nome do usuário, CPF, a data de saída e a data de retorno
 
 [] Devolver o livro emprestado
@@ -52,3 +52,4 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 usuario_id
 data_saida
 data_retorno}) => Promise<void>
+[] bookWithISBNIsPendentByUser: ({usuario_id, book_id}) => Promise<boolean>
