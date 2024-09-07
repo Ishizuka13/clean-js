@@ -19,10 +19,10 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 [x] Cadastrar um novo livro
 [x] - ISBN deve ser único
 
-[] Buscar um livro por nome ou ISBN
-[] - Retornar os livros ou vazio
+[x] Buscar um livro por nome ou ISBN
+[x] - Retornar os livros ou vazio
 
-[] Emprestar um livro ao usuário
+[x] Emprestar um livro ao usuário
 [] - A data de retorno não pode ser menor que a data de saída
 [] - Um usuário não pode estar com mais de um livro com o mesmo ISBN ao mesmo tempo
 [] - Um usuário pode estar com mais de um livro com ISBN diferentes ao mesmo tempo

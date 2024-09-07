@@ -1,3 +1,4 @@
+const { Either } = require("../shared/errors");
 const lendBookUseCase = require("./book-lending.usecase");
 
 describe("Lend book UseCase", function () {
@@ -20,5 +21,21 @@ describe("Lend book UseCase", function () {
     expect(output.right).toBeNull();
     expect(lendsRepository.lend).toHaveBeenCalledWith(lendDTO);
     expect(lendsRepository.lend).toHaveBeenCalledTimes(1);
+  });
+
+  test("Must return an Either.left if return_date is lower than quit_date", async function () {
+    const lendDTO = {
+      livro_id: "qualquer_livro_id",
+      usuario_id: "qualquer_usuario_id",
+      data_saida: new Date("2024-02-16"),
+      data_retorno: new Date("2024-02-15"),
+    };
+
+    const sut = lendBookUseCase({ lendsRepository });
+    const output = await sut(lendDTO);
+
+    expect(output.left).toBe(Either.ReturnDateLowerThanQuitDate);
+    // expect(lendsRepository.lend).toHaveBeenCalledWith(lendDTO);
+    // expect(lendsRepository.lend).toHaveBeenCalledTimes(1);
   });
 });
