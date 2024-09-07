@@ -52,4 +52,4 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 usuario_id
 data_saida
 data_retorno}) => Promise<void>
-[] bookWithISBNIsPendentByUser: ({usuario_id, book_id}) => Promise<boolean>
+[] bookWithISBNIsPendentByUser: ({usuario_id, book_id}) => Promise<boolean> & {livro: {nome}, usuario: {nome_completo, CPF, email}}
