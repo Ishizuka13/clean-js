@@ -1,3 +1,4 @@
+const { AppError } = require("../shared/errors");
 const returnBookUseCase = require("./return-book.usecase");
 
 describe("Return book UseCase", function () {
@@ -39,5 +40,17 @@ describe("Return book UseCase", function () {
     expect(output.right).toBe("Multa por atraso: R$10,00");
     expect(lendsRepository.return).toHaveBeenCalledWith(returnBookDTO);
     expect(lendsRepository.return).toHaveBeenCalledTimes(1);
+  });
+
+  test("Must return a throw AppError if lendsRepository is not provided", function () {
+    expect(() => returnBookUseCase({})).toThrow(
+      new AppError(AppError.dependencies)
+    );
+  });
+  test("Must return a throw AppError if the required inputs are not provided is not provided", async function () {
+    const sut = returnBookUseCase({ lendsRepository });
+    await expect(() => sut({})).rejects.toThrow(
+      new AppError(AppError.requiredParams)
+    );
   });
 });
