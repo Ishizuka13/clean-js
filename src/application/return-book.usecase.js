@@ -1,3 +1,4 @@
+const lendEntity = require("../enterprise/entities/lend.entity");
 const { Either, AppError } = require("../shared/errors");
 
 module.exports = function returnBookUseCase({ lendsRepository }) {
@@ -12,12 +13,11 @@ module.exports = function returnBookUseCase({ lendsRepository }) {
       data_devolucao,
     });
 
-    const verifyReturn =
-      new Date(data_retorno).getTime() < new Date(data_devolucao).getTime();
-    const verifyFines = verifyReturn
-      ? "Multa por atraso: R$10,00"
-      : "Multa por atraso: R$0";
+    const calculateFine = lendEntity.calculateFine({
+      data_retorno,
+      data_devolucao,
+    });
 
-    return Either.Right(verifyFines);
+    return Either.Right(calculateFine);
   };
 };

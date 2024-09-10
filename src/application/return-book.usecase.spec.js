@@ -19,7 +19,7 @@ describe("Return book UseCase", function () {
     const sut = returnBookUseCase({ lendsRepository });
     const output = await sut(returnBookDTO);
 
-    expect(output.right).toBe("Multa por atraso: R$0");
+    expect(output.right).toBe("Multa por atraso: R$ 0");
     expect(lendsRepository.return).toHaveBeenCalledWith(returnBookDTO);
     expect(lendsRepository.return).toHaveBeenCalledTimes(1);
   });
@@ -37,7 +37,7 @@ describe("Return book UseCase", function () {
     const sut = returnBookUseCase({ lendsRepository });
     const output = await sut(returnBookDTO);
 
-    expect(output.right).toBe("Multa por atraso: R$10,00");
+    expect(output.right).toBe("Multa por atraso: R$ 10,00");
     expect(lendsRepository.return).toHaveBeenCalledWith(returnBookDTO);
     expect(lendsRepository.return).toHaveBeenCalledTimes(1);
   });
