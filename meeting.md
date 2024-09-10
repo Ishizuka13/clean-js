@@ -31,7 +31,7 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 [x] Devolver o livro emprestado sem multa
 [x] - Caso o usuário tenha atrasado, será gerada uma multa fixa de R$10,00
 
-[] Mostrar todos os empréstimos pendentes, com o nome do livro, nome do usuário, CPF, data de saída e data de retorno. Ordenados pela data de retorno mais antinga
+[x] Mostrar todos os empréstimos pendentes, com o nome do livro, nome do usuário, CPF, data de saída e data de retorno. Ordenados pela data de retorno mais antinga
 
 ## Estruturas
 
