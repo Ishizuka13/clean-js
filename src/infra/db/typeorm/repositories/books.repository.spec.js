@@ -42,4 +42,30 @@ describe("Books Repository Typeorm", function () {
 
     expect(ISBNExists).toBe(false);
   });
+
+  test("Must return a complete book if find by name", async function () {
+    await typeormBooksRepository.save(bookDTO);
+
+    const findBookByName = await sut.findByNameOrISBN("nome_valido");
+
+    expect(findBookByName).toHaveLength(1);
+    expect(findBookByName[0].nome).toBe("nome_valido");
+  });
+
+  test("Must return a complete book if find by ISBN", async function () {
+    await typeormBooksRepository.save(bookDTO);
+
+    const findBookByISBN = await sut.findByNameOrISBN("ISBN_valido");
+
+    expect(findBookByISBN).toHaveLength(1);
+    expect(findBookByISBN[0].ISBN).toBe("ISBN_valido");
+  });
+
+  test("Must return an empty array book if can not find book by name or ISBN", async function () {
+    await typeormBooksRepository.save(bookDTO);
+
+    const findBookByNameOrISBN = await sut.findByNameOrISBN("ISBN_invalido");
+
+    expect(findBookByNameOrISBN).toHaveLength(0);
+  });
 });
