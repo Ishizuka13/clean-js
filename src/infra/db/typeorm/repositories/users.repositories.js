@@ -29,7 +29,15 @@ const usersRepository = function () {
     return user;
   };
 
-  return { register, findByCPF };
+  const CPFExists = async function (CPF) {
+    const user = await typeormUsersRepository.count({
+      where: { CPF },
+    });
+
+    return user === 0 ? false : true;
+  };
+
+  return { register, findByCPF, CPFExists };
 };
 
 module.exports = { usersRepository, typeormUsersRepository };
