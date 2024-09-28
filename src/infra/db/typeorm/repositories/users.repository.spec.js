@@ -1,7 +1,7 @@
 const {
   usersRepository,
   typeormUsersRepository,
-} = require("./users.repositories");
+} = require("./users.repository");
 
 describe("Users Repository", function () {
   let sut;
