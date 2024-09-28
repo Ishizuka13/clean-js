@@ -35,4 +35,11 @@ describe("Users Repository", function () {
     expect(findByRegisteredCPF).toBeDefined();
     expect(findByRegisteredCPF.nome_completo).toBe("nome_valido");
   });
+
+  test("Must return null if user with CPF does not exist", async function () {
+    const sut = usersRepository();
+    const findByRegisteredCPF = await sut.findByCPF("CPF-nao_cadastro");
+
+    expect(findByRegisteredCPF).toBeNull();
+  });
 });
