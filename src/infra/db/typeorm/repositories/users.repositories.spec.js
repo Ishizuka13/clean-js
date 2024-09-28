@@ -49,4 +49,25 @@ describe("Users Repository", function () {
 
     expect(CPFExists).toBe(true);
   });
+  test("Must return false if user by CPF does not exists", async function () {
+    await typeormUsersRepository.save(userDTO);
+
+    const CPFExists = await sut.CPFExists("CPF_invalido");
+
+    expect(CPFExists).toBe(false);
+  });
+  test("Must return true if user by Email exists", async function () {
+    await typeormUsersRepository.save(userDTO);
+
+    const emailExists = await sut.emailExists("email_valido");
+
+    expect(emailExists).toBe(true);
+  });
+  test("Must return false if user by Email does not exists", async function () {
+    await typeormUsersRepository.save(userDTO);
+
+    const emailExists = await sut.emailExists("email_invalido");
+
+    expect(emailExists).toBe(false);
+  });
 });

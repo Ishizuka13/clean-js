@@ -38,8 +38,9 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 ## UsersRepository
 
 [x] register: ({nome_completo, CPF, telefone, endereco, email}) => Promise<void>
-[x] findByCPF(CPF) => Promise<boolean>
-[] foundByEmail(email) => Promise<boolean>
+[x] findByCPF(CPF) => Promise<User | null>
+[x] CPFExists(CPF) => Promise<boolean>
+[x] EmailExists(email) => Promise<boolean>
 
 ## booksRepository
 

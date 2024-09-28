@@ -36,8 +36,15 @@ const usersRepository = function () {
 
     return user === 0 ? false : true;
   };
+  const emailExists = async function (email) {
+    const user = await typeormUsersRepository.count({
+      where: { email },
+    });
 
-  return { register, findByCPF, CPFExists };
+    return user === 0 ? false : true;
+  };
+
+  return { register, findByCPF, CPFExists, emailExists };
 };
 
 module.exports = { usersRepository, typeormUsersRepository };
