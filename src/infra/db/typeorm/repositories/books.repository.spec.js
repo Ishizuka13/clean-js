@@ -35,4 +35,11 @@ describe("Books Repository Typeorm", function () {
 
     expect(ISBNExists).toBe(true);
   });
+  test("Must return false if book by ISBN does not exists", async function () {
+    await typeormBooksRepository.save(bookDTO);
+
+    const ISBNExists = await sut.ISBNExists("ISBN_invalido");
+
+    expect(ISBNExists).toBe(false);
+  });
 });

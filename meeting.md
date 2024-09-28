@@ -44,8 +44,9 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 
 ## booksRepository
 
-[] register: ({nome, quantidade, autor, genero, ISBN}) => Promise<void>
-[] foundByISBN: (ISBN) => Promise<boolean>
+[x] register: ({nome, quantidade, autor, genero, ISBN}) => Promise<void>
+[x] ISBNExists: (ISBN) => Promise<boolean>
+[] findByNameOrISBN: (ISBN) => Promise<boolean>
 
 ## lendsRepository
 
