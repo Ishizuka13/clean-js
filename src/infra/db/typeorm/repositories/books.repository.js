@@ -13,7 +13,15 @@ const BooksRepository = function () {
     });
   };
 
-  return { register };
+  const ISBNExists = async function (ISBN) {
+    const book = await typeormBooksRepository.count({
+      where: { ISBN },
+    });
+
+    return book === 0 ? false : true;
+  };
+
+  return { register, ISBNExists };
 };
 
 module.exports = { BooksRepository, typeormBooksRepository };

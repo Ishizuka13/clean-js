@@ -1,10 +1,17 @@
-const { BooksRepository } = require("./books.repository");
+const {
+  BooksRepository,
+  typeormBooksRepository,
+} = require("./books.repository");
 
 describe("Books Repository Typeorm", function () {
   let sut;
 
   beforeAll(function () {
     sut = BooksRepository();
+  });
+
+  beforeEach(async function () {
+    await typeormBooksRepository.delete({});
   });
 
   const bookDTO = {
@@ -19,5 +26,13 @@ describe("Books Repository Typeorm", function () {
     const createdBook = await sut.register(bookDTO);
 
     expect(createdBook).toBeUndefined();
+  });
+
+  test("Must return true if book's ISBN exists", async function () {
+    await typeormBooksRepository.save(bookDTO);
+
+    const ISBNExists = await sut.ISBNExists("ISBN_valido");
+
+    expect(ISBNExists).toBe(true);
   });
 });
