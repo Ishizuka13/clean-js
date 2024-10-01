@@ -18,6 +18,11 @@ module.exports = class Either {
   static valueAlreadyRegistered(value) {
     return { message: `${value} already registered` };
   }
+
+  fold(leftFn, rightFn) {
+    return this.left != null ? leftFn(this.left) : rightFn(this.right);
+  }
+
   static ReturnDateLowerThanQuitDate = {
     message: "Data retorno menor do que saída",
   };
