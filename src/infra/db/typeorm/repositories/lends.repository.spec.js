@@ -47,7 +47,7 @@ describe("Lends Repository Typeorm", function () {
     expect(lendBook).toBeUndefined();
   });
 
-  test("Must return the return date previously saved on tyhe database", async function () {
+  test("Must return the return date previously saved on the database", async function () {
     const user = await typeormUsersRepository.save(userDTO);
 
     const book = await typeormBooksRepository.save(bookDTO);
@@ -55,8 +55,8 @@ describe("Lends Repository Typeorm", function () {
     const lend = await typeormLendsRepository.save({
       usuario_id: user.id,
       livro_id: book.id,
-      data_retorno: "2024-01-26",
       data_saida: "2024-01-26",
+      data_retorno: "2024-01-26",
     });
 
     const returnedBook = await sut.returnedBook({
@@ -65,5 +65,29 @@ describe("Lends Repository Typeorm", function () {
     });
 
     expect(returnedBook.data_retorno).toBe(lend.data_retorno);
+  });
+
+  test("Must update the return date saved on the database", async function () {
+    const user = await typeormUsersRepository.save(userDTO);
+
+    const book = await typeormBooksRepository.save(bookDTO);
+
+    const lend = await typeormLendsRepository.save({
+      usuario_id: user.id,
+      livro_id: book.id,
+      data_saida: "2024-01-26",
+      data_retorno: "2024-01-26",
+    });
+
+    await sut.returnedBook({
+      emprestimo_id: lend.id,
+      data_devolucao: "2024-01-26",
+    });
+
+    const findLendById = await typeormLendsRepository.findOneBy({
+      id: lend.id,
+    });
+
+    expect(findLendById.data_devolucao).toBe("2024-01-26");
   });
 });

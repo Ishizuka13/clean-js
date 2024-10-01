@@ -50,9 +50,9 @@ Somos uma biblioteca pequena e gostaríamos de controlar a nossa entrada e saíd
 
 ## lendsRepository
 
-[] lend({ livro_id
+[x] lend({ livro_id
 usuario_id
 data_saida
 data_retorno}) => Promise<void>
+[x] return: ({emprestimo_id, data_devolucao}) => Promise<data_retorno>
 [] bookWithISBNIsPendentByUser: ({usuario_id, book_id}) => Promise<boolean> & {livro: {nome}, usuario: {nome_completo, CPF, email}}
-[] return: ({emprestimo_id, data_devolucao}) => Promise<data_retorno>

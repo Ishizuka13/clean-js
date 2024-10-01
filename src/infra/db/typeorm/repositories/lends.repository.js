@@ -20,9 +20,7 @@ const lendsRepository = function () {
   const returnedBook = async function ({ emprestimo_id, data_devolucao }) {
     await typeormLendsRepository.update(
       { id: emprestimo_id },
-      {
-        data_devolucao,
-      }
+      { data_devolucao }
     );
 
     const { data_retorno } = await typeormLendsRepository.findOneBy({
