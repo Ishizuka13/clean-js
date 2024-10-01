@@ -55,4 +55,6 @@ usuario_id
 data_saida
 data_retorno}) => Promise<void>
 [x] return: ({emprestimo_id, data_devolucao}) => Promise<data_retorno>
-[] bookWithISBNIsPendentByUser: ({usuario_id, book_id}) => Promise<boolean> & {livro: {nome}, usuario: {nome_completo, CPF, email}}
+[x] isBookISBNLendPendingUser: ({usuario_id, livro_id}) => Promise<void>
+[x] findPendingsByUserId: ({usuario_id, book_id}) => Promise<Lends & {Livro: {nome}, Usuario: {nome_completo, CPF, email}}>
+[x] findPendings: ({usuario_id, book_id}) => Promise<Lends & {livro: {nome}, usuario: {nome_completo, CPF}}>

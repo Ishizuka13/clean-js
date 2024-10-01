@@ -1,3 +1,4 @@
+const { IsNull } = require("typeorm");
 const { typeormServer } = require("../setup");
 
 const typeormLendsRepository = typeormServer.getRepository("Emprestimo");
@@ -30,7 +31,72 @@ const lendsRepository = function () {
     return { data_retorno };
   };
 
-  return { lend, returnedBook };
+  const findPendings = async function () {
+    const pendingLends = await typeormLendsRepository.find({
+      where: {
+        data_devolucao: IsNull(),
+      },
+      relations: ["usuario", "livro"],
+      select: {
+        id: true,
+        data_saida: true,
+        data_retorno: true,
+        usuario: {
+          nome_completo: true,
+          CPF: true,
+        },
+        livro: {
+          nome: true,
+        },
+      },
+    });
+
+    return pendingLends;
+  };
+
+  const isBookISBNLendPendingUser = async function ({ usuario_id, livro_id }) {
+    const lendBook = await typeormLendsRepository.count({
+      where: {
+        data_devolucao: IsNull(),
+        livro_id,
+        usuario_id,
+      },
+    });
+
+    return lendBook === 0 ? false : true;
+  };
+
+  const findPendingsByUserId = async function (emprestimo_id) {
+    const lend = await typeormLendsRepository.findOne({
+      where: {
+        id: emprestimo_id,
+      },
+      relations: ["usuario", "livro"],
+      select: {
+        id: true,
+        data_saida: true,
+        data_retorno: true,
+        usuario: {
+          nome_completo: true,
+          CPF: true,
+          email: true,
+        },
+        livro: {
+          nome: true,
+        },
+      },
+    });
+
+    return lend;
+  };
+
+  return {
+    lend,
+    returnedBook,
+    findPendings,
+    isBookISBNLendPendingUser,
+    findPendingsByUserId,
+  };
 };
 
 module.exports = { lendsRepository, typeormLendsRepository };
