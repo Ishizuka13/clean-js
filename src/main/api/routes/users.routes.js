@@ -1,9 +1,6 @@
 const { Router } = require("express");
-const {
-  usersRepository,
-} = require("../../../infra/db/typeorm/repositories/users.repository");
-const userRegisterUsecase = require("../../../application/user-register.usecase");
-const registerUserController = require("../../../interface-adapters/controllers/User/registerUserController");
+
+const userRegisterCompose = require("../composers/user-register.compose");
 
 const usersRoutes = Router();
 
@@ -12,15 +9,7 @@ usersRoutes.post("/", async (req, res) => {
     body: req.body,
   };
 
-  const usersRepositoryFn = usersRepository();
-  const userRegisterUseCaseFn = userRegisterUsecase({
-    usersRepository: usersRepositoryFn,
-  });
-
-  const { statusCode, body } = registerUserController({
-    userRegisterUseCaseFn,
-    httpRequest,
-  });
+  const { statusCode, body } = await userRegisterCompose(httpRequest);
 
   return response.status(statusCode).json(body);
 });
