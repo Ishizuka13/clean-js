@@ -1,7 +1,7 @@
 const { ZodError } = require("zod");
-const { Either, AppError } = require("../../shared/errors");
-const httpResponse = require("../../shared/helpers/http.response");
-const lendBookController = require("./lend-book.controller");
+const { Either, AppError } = require("../../../../shared/errors");
+const httpResponse = require("../../../../shared/helpers/http.response");
+const lendBookController = require(".");
 
 describe("lend Book Controller", function () {
   const lendBookUseCase = jest.fn();

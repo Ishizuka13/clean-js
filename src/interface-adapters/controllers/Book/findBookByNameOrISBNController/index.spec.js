@@ -1,7 +1,7 @@
 const { ZodError } = require("zod");
-const { Either, AppError } = require("../../shared/errors");
-const httpResponse = require("../../shared/helpers/http.response");
-const findBookByNameOrIsbnController = require("./find-book-by-name-or-isbn.controller");
+const { Either, AppError } = require("../../../../shared/errors");
+const httpResponse = require("../../../../shared/helpers/http.response");
+const findBookByNameOrIsbnController = require("./index.js");
 
 describe("Find Book By Name Or ISBN Controller", function () {
   const findBookByNameOrISBNUseCase = jest.fn();

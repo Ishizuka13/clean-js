@@ -1,7 +1,7 @@
 const { ZodError } = require("zod");
-const { Either, AppError } = require("../../shared/errors");
-const httpResponse = require("../../shared/helpers/http.response");
-const userRegisterController = require("./user-register.controller");
+const { Either, AppError } = require("../../../../shared/errors");
+const httpResponse = require("../../../../shared/helpers/http.response");
+const userRegisterController = require("./index.js");
 
 describe("User register controller", function () {
   const userRegisterUseCase = jest.fn();

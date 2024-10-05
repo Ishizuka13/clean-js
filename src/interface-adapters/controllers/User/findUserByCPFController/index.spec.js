@@ -1,7 +1,7 @@
 const { ZodError } = require("zod");
-const { Either, AppError } = require("../../shared/errors");
-const httpResponse = require("../../shared/helpers/http.response");
-const findUserByCpfController = require("./find-user-by-cpf.controller");
+const { Either, AppError } = require("../../../../shared/errors");
+const httpResponse = require("../../../../shared/helpers/http.response");
+const findUserByCpfController = require("./index.js");
 
 describe("Find user by CPF", function () {
   const findUserByCPFUseCase = jest.fn();

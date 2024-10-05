@@ -1,7 +1,7 @@
 const { ZodError } = require("zod");
-const { Either, AppError } = require("../../shared/errors");
-const httpResponse = require("../../shared/helpers/http.response");
-const registerBookController = require("./register-book.controller");
+const { Either, AppError } = require("../../../../shared/errors");
+const httpResponse = require("../../../../shared/helpers/http.response.js");
+const registerBookController = require("./index.js");
 
 describe("Register Book Controller", function () {
   const registerBookUseCase = jest.fn();
@@ -23,7 +23,6 @@ describe("Register Book Controller", function () {
       registerBookUseCase,
       httpRequest,
     });
-
     expect(response).toEqual(httpResponse(201, null));
     expect(registerBookUseCase).toHaveBeenCalledWith(httpRequest.body);
     expect(registerBookUseCase).toHaveBeenCalledTimes(1);
