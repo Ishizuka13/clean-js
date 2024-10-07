@@ -8,15 +8,14 @@ module.exports = function userRegisterUseCase({ usersRepository }) {
     const checkedInputs = nome_completo && CPF && telefone && endereco && email;
     if (!checkedInputs) throw new AppError(AppError.requiredParams);
 
-    const checkIfTheCPFIsAlreadyRegistered = await usersRepository.foundCPF(
+    const checkIfTheCPFIsAlreadyRegistered = await usersRepository.findByCPF(
       CPF
     );
     if (checkIfTheCPFIsAlreadyRegistered)
       return Either.Left(Either.valueAlreadyRegistered("CPF"));
 
-    const checkIfTheEmailIsAlreadyRegistered = await usersRepository.foundEmail(
-      email
-    );
+    const checkIfTheEmailIsAlreadyRegistered =
+      await usersRepository.emailExists(email);
     if (checkIfTheEmailIsAlreadyRegistered)
       return Either.Left(Either.valueAlreadyRegistered("Email"));
     await usersRepository.register({

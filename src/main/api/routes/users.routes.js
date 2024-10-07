@@ -11,7 +11,7 @@ usersRoutes.post("/", async (req, res) => {
 
   const { statusCode, body } = await userRegisterCompose(httpRequest);
 
-  return response.status(statusCode).json(body);
+  return res.status(statusCode).json(body);
 });
 
 module.exports = { usersRoutes };
