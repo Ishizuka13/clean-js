@@ -6,8 +6,8 @@ const registerUserUseCase = require("./user-register.usecase.js");
 describe("Register user UseCase", function () {
   const usersRepository = {
     register: jest.fn(),
-    foundCPF: jest.fn(),
-    foundEmail: jest.fn(),
+    findByCPF: jest.fn(),
+    emailExists: jest.fn(),
   };
 
   test("Must register a user", async function () {
@@ -39,7 +39,7 @@ describe("Register user UseCase", function () {
   });
 
   test("Must return a Either.Left() if already exists a register of the CPF", async function () {
-    usersRepository.foundCPF.mockResolvedValue(true);
+    usersRepository.findByCPF.mockResolvedValue(true);
     const userDTO = {
       nome_completo: "nome_valido",
       CPF: "CPF_ja_cadastrado",
@@ -52,13 +52,13 @@ describe("Register user UseCase", function () {
     const output = await sut(userDTO);
     expect(output.right).toBeNull();
     expect(output.left).toEqual(Either.valueAlreadyRegistered("CPF"));
-    expect(usersRepository.foundCPF).toHaveBeenCalledWith(userDTO.CPF);
-    expect(usersRepository.foundCPF).toHaveBeenCalledTimes(1);
+    expect(usersRepository.findByCPF).toHaveBeenCalledWith(userDTO.CPF);
+    expect(usersRepository.findByCPF).toHaveBeenCalledTimes(1);
   });
 
   test("Must return a Either.Left if already exists an registered email", async function () {
-    usersRepository.foundCPF.mockResolvedValue(false);
-    usersRepository.foundEmail.mockResolvedValue(true);
+    usersRepository.findByCPF.mockResolvedValue(false);
+    usersRepository.emailExists.mockResolvedValue(true);
     const userDTO = {
       nome_completo: "nome_valido",
       CPF: "CPF_valido",
@@ -72,7 +72,7 @@ describe("Register user UseCase", function () {
 
     expect(output.right).toBeNull();
     expect(output.left).toEqual(Either.valueAlreadyRegistered("Email"));
-    expect(usersRepository.foundEmail).toHaveBeenCalledWith(userDTO.email);
-    expect(usersRepository.foundEmail).toHaveBeenCalledTimes(1);
+    expect(usersRepository.emailExists).toHaveBeenCalledWith(userDTO.email);
+    expect(usersRepository.emailExists).toHaveBeenCalledTimes(1);
   });
 });
