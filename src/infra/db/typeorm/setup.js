@@ -10,6 +10,7 @@ if (process.env.NODE_ENV === "test") {
     synchronize: true,
     dropSchema: true,
     entities: [
+      // resolve(__dirname, "entities/*.entity-typeorm.js "),
       require("./entities/User.entity-typeorm"),
       require("./entities/Book.entity-typeorm"),
       require("./entities/Lend.entity-typeorm"),

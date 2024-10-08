@@ -35,4 +35,42 @@ describe("Users Route", function () {
       email: ["Email é obrigatório"],
     });
   });
+
+  test("Must return an user when found by CPF", async function () {
+    const userDTO = {
+      nome_completo: "nome_valido",
+      CPF: "123.123.123-12",
+      endereco: "endereco_valido",
+      telefone: "telefone_valido",
+      email: "email_valido@email.com",
+    };
+
+    await typeormUsersRepository.save(userDTO);
+
+    const { statusCode, body } = await request(app).get(
+      `/user/cpf/${userDTO.CPF}`
+    );
+
+    expect(body.id).toBeDefined();
+    expect(statusCode).toBe(200);
+    expect(body).toEqual(expect.objectContaining(userDTO));
+  });
+
+  test("Must return null when user is not found by CPF", async function () {
+    const { statusCode, body } = await request(app).get(
+      `/user/cpf/123.123.123-12`
+    );
+
+    expect(statusCode).toBe(200);
+    expect(body).toBeNull();
+  });
+
+  test("Must verify if CPF is passed correctly in params", async function () {
+    const { statusCode, body } = await request(app).get(`/user/cpf/1`);
+
+    expect(statusCode).toBe(400);
+    expect(body.errors.fieldErrors).toEqual({
+      CPF: ["CPF inválido"],
+    });
+  });
 });

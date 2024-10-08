@@ -5,6 +5,6 @@ services:
     ports:
       - 5432:5432
     environment:
+      - POSTGRESQL_DATABASE=biblioteca_test
       - POSTGRESQL_USERNAME=postgres
       - POSTGRESQL_PASSWORD=123456
-      - POSTGRESQL_DATABASE=biblioteca_test

@@ -1,5 +1,5 @@
 const { AppError } = require("../shared/errors");
-const searchUserByCpfUsecase = require("./search-user-by-cpf.usecase");
+const findUserByCPFUsecase = require("./find-user-by-cpf.usecase");
 
 describe("Search user by CPF UseCase", function () {
   const usersRepository = {
@@ -21,7 +21,7 @@ describe("Search user by CPF UseCase", function () {
 
     usersRepository.searchByCPF.mockResolvedValue(outputDTO);
 
-    const sut = searchUserByCpfUsecase({ usersRepository });
+    const sut = findUserByCPFUsecase({ usersRepository });
     const output = await sut(cpfDTO);
 
     expect(output.right).toEqual(outputDTO);
@@ -35,7 +35,7 @@ describe("Search user by CPF UseCase", function () {
       CPF: "CPF_nao_cadastrado",
     };
 
-    const sut = searchUserByCpfUsecase({ usersRepository });
+    const sut = findUserByCPFUsecase({ usersRepository });
     const output = await sut(cpfDTO);
 
     expect(output.right).toBeNull();
@@ -44,13 +44,13 @@ describe("Search user by CPF UseCase", function () {
   });
 
   test("Must return a throw AppError if usersRepository is not provided", async function () {
-    expect(() => searchUserByCpfUsecase({})).toThrow(
+    expect(() => findUserByCPFUsecase({})).toThrow(
       new AppError(AppError.dependencies)
     );
   });
 
   test("Must return a throw AppError if CPF input is not provided", async function () {
-    const sut = searchUserByCpfUsecase({ usersRepository });
+    const sut = findUserByCPFUsecase({ usersRepository });
 
     expect(() => sut({})).rejects.toThrow(
       new AppError(AppError.requiredParams)
