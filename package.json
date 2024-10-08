@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.0",
+    "express-async-errors": "^3.1.1",
     "pg": "^8.13.0",
     "typeorm": "^0.3.20",
     "zod": "^3.23.8"

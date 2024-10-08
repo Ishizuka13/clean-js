@@ -8,6 +8,7 @@ describe("Users Route", function () {
   beforeEach(async function () {
     await typeormUsersRepository.query("DELETE FROM usuarios");
   });
+
   test("Must be able to register user", async function () {
     const { statusCode, body } = await request(app).post("/user").send({
       nome_completo: "nome_valido",
@@ -19,5 +20,19 @@ describe("Users Route", function () {
 
     expect(statusCode).toBe(201);
     expect(body).toBeNull();
+  });
+
+  test("Must return an error with a the required inputs", async function () {
+    const { statusCode, body } = await request(app).post("/user").send({});
+
+    expect(statusCode).toBe(400);
+    expect(body.message).toBe("Erro de validacao");
+    expect(body.errors.fieldErrors).toEqual({
+      nome_completo: ["Nome Completo é obrigatório"],
+      CPF: ["CPF é obrigatório"],
+      endereco: ["Endereço é obrigatório"],
+      telefone: ["Telefone é obrigatório"],
+      email: ["Email é obrigatório"],
+    });
   });
 });
