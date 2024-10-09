@@ -1,9 +1,9 @@
 const { AppError } = require("../shared/errors");
-const searchBookByNameOrISBNUsecase = require("./search-book-by-name-or-ISBN.usecase");
+const findBookByNameOrISBNUsecase = require("./find-book-by-name-or-ISBN.usecase");
 
 describe("Search books by name or ISBN UseCase", function () {
   const booksRepository = {
-    searchBookByNameOrISBN: jest.fn(),
+    findBookByNameOrISBN: jest.fn(),
   };
 
   test("Must return a valid book when searched by name or ISBN", async function () {
@@ -20,41 +20,41 @@ describe("Search books by name or ISBN UseCase", function () {
         ISBN: "valor_valido",
       },
     ];
-    booksRepository.searchBookByNameOrISBN.mockResolvedValue(outputDTO);
+    booksRepository.findBookByNameOrISBN.mockResolvedValue(outputDTO);
 
-    const sut = searchBookByNameOrISBNUsecase({ booksRepository });
+    const sut = findBookByNameOrISBNUsecase({ booksRepository });
     const output = await sut(nomeISBNDTO);
 
     expect(output.right).toEqual(outputDTO);
-    expect(booksRepository.searchBookByNameOrISBN).toHaveBeenCalledWith(
+    expect(booksRepository.findBookByNameOrISBN).toHaveBeenCalledWith(
       nomeISBNDTO.valor
     );
-    expect(booksRepository.searchBookByNameOrISBN).toHaveBeenCalledTimes(1);
+    expect(booksRepository.findBookByNameOrISBN).toHaveBeenCalledTimes(1);
   });
 
   test("Must return a null array when the name or ISBN does not exists", async function () {
     const nomeISBNDTO = {
       valor: "valor_nao_cadastrado",
     };
-    booksRepository.searchBookByNameOrISBN.mockResolvedValue([]);
-    const sut = searchBookByNameOrISBNUsecase({ booksRepository });
+    booksRepository.findBookByNameOrISBN.mockResolvedValue([]);
+    const sut = findBookByNameOrISBNUsecase({ booksRepository });
     const output = await sut(nomeISBNDTO);
 
     expect(output.right).toEqual([]);
-    expect(booksRepository.searchBookByNameOrISBN).toHaveBeenCalledWith(
+    expect(booksRepository.findBookByNameOrISBN).toHaveBeenCalledWith(
       nomeISBNDTO.valor
     );
-    expect(booksRepository.searchBookByNameOrISBN).toHaveBeenCalledTimes(1);
+    expect(booksRepository.findBookByNameOrISBN).toHaveBeenCalledTimes(1);
   });
 
   test("Must return a throw AppError if the booksRepository is not provided", function () {
-    expect(() => searchBookByNameOrISBNUsecase({})).toThrow(
+    expect(() => findBookByNameOrISBNUsecase({})).toThrow(
       new AppError(AppError.dependencies)
     );
   });
 
   test("Must return a throw AppError if the required input is not provided", async function () {
-    const sut = searchBookByNameOrISBNUsecase({ booksRepository });
+    const sut = findBookByNameOrISBNUsecase({ booksRepository });
     await expect(() => sut({})).rejects.toThrow(
       new AppError(AppError.requiredParams)
     );

@@ -20,7 +20,7 @@ const zodValidator = z.object({
   }),
 });
 
-module.exports = async function registerBookController({
+module.exports = async function bookRegisterController({
   registerBookUseCase,
   httpRequest,
 }) {

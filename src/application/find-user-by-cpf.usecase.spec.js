@@ -3,7 +3,7 @@ const findUserByCPFUsecase = require("./find-user-by-cpf.usecase");
 
 describe("Search user by CPF UseCase", function () {
   const usersRepository = {
-    searchByCPF: jest.fn(),
+    findByCPF: jest.fn(),
   };
 
   test("Must return a user when CPF is registered", async function () {
@@ -19,18 +19,18 @@ describe("Search user by CPF UseCase", function () {
       email: "qualquer_email",
     };
 
-    usersRepository.searchByCPF.mockResolvedValue(outputDTO);
+    usersRepository.findByCPF.mockResolvedValue(outputDTO);
 
     const sut = findUserByCPFUsecase({ usersRepository });
     const output = await sut(cpfDTO);
 
     expect(output.right).toEqual(outputDTO);
-    expect(usersRepository.searchByCPF).toHaveBeenCalledWith(cpfDTO.CPF);
-    expect(usersRepository.searchByCPF).toHaveBeenCalledTimes(1);
+    expect(usersRepository.findByCPF).toHaveBeenCalledWith(cpfDTO.CPF);
+    expect(usersRepository.findByCPF).toHaveBeenCalledTimes(1);
   });
 
   test("Must return null if there is no CPF registered", async function () {
-    usersRepository.searchByCPF.mockResolvedValue(null);
+    usersRepository.findByCPF.mockResolvedValue(null);
     const cpfDTO = {
       CPF: "CPF_nao_cadastrado",
     };
@@ -39,8 +39,8 @@ describe("Search user by CPF UseCase", function () {
     const output = await sut(cpfDTO);
 
     expect(output.right).toBeNull();
-    expect(usersRepository.searchByCPF).toHaveBeenCalledWith(cpfDTO.CPF);
-    expect(usersRepository.searchByCPF).toHaveBeenCalledTimes(1);
+    expect(usersRepository.findByCPF).toHaveBeenCalledWith(cpfDTO.CPF);
+    expect(usersRepository.findByCPF).toHaveBeenCalledTimes(1);
   });
 
   test("Must return a throw AppError if usersRepository is not provided", async function () {

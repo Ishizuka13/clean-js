@@ -1,7 +1,7 @@
 const { ZodError } = require("zod");
 const { Either, AppError } = require("../../../../shared/errors");
 const httpResponse = require("../../../../shared/helpers/http.response.js");
-const registerBookController = require("./index.js");
+const bookRegisterController = require("./index.js");
 
 describe("Register Book Controller", function () {
   const registerBookUseCase = jest.fn();
@@ -19,7 +19,7 @@ describe("Register Book Controller", function () {
       },
     };
 
-    const response = await registerBookController({
+    const response = await bookRegisterController({
       registerBookUseCase,
       httpRequest,
     });
@@ -43,7 +43,7 @@ describe("Register Book Controller", function () {
       },
     };
 
-    const response = await registerBookController({
+    const response = await bookRegisterController({
       registerBookUseCase,
       httpRequest,
     });
@@ -54,7 +54,7 @@ describe("Register Book Controller", function () {
   });
 
   test("Must return a throw AppError if the required params are not provided", async function () {
-    expect(() => registerBookController({})).rejects.toThrow(
+    expect(() => bookRegisterController({})).rejects.toThrow(
       new AppError(AppError.dependencies)
     );
   });
@@ -65,7 +65,7 @@ describe("Register Book Controller", function () {
     };
 
     expect(() =>
-      registerBookController({ registerBookUseCase, httpRequest })
+      bookRegisterController({ registerBookUseCase, httpRequest })
     ).rejects.toBeInstanceOf(ZodError);
   });
 });

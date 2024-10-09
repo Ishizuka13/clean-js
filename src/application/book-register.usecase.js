@@ -7,7 +7,7 @@ module.exports = function bookRegisterUseCase({ booksRepository }) {
 
     if (!checkedInputs) throw new AppError(AppError.requiredParams);
 
-    const checkIfISBNAlreadyExists = await booksRepository.foundByISBN(ISBN);
+    const checkIfISBNAlreadyExists = await booksRepository.ISBNExists(ISBN);
     if (checkIfISBNAlreadyExists)
       return Either.Left(Either.valueAlreadyRegistered("ISBN"));
 

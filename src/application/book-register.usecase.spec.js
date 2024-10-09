@@ -4,7 +4,7 @@ const bookRegisterUsecase = require("./book-register.usecase");
 describe("Book register UseCase", function () {
   const booksRepository = {
     register: jest.fn(),
-    foundByISBN: jest.fn(),
+    ISBNExists: jest.fn(),
   };
 
   test("Must be able to register a book", async function () {
@@ -38,7 +38,7 @@ describe("Book register UseCase", function () {
   });
 
   test("Must return an Either.left.registeredValue('ISBN') if the ISBN already exists", async function () {
-    booksRepository.foundByISBN.mockReturnValue(true);
+    booksRepository.ISBNExists.mockReturnValue(true);
 
     const livroDTO = {
       nome: "nome_valido",
@@ -53,7 +53,7 @@ describe("Book register UseCase", function () {
     console.log(output);
 
     expect(output.left).toEqual(Either.valueAlreadyRegistered("ISBN"));
-    expect(booksRepository.foundByISBN).toHaveBeenCalledWith(livroDTO.ISBN);
-    expect(booksRepository.foundByISBN).toHaveBeenCalledTimes(1);
+    expect(booksRepository.ISBNExists).toHaveBeenCalledWith(livroDTO.ISBN);
+    expect(booksRepository.ISBNExists).toHaveBeenCalledTimes(1);
   });
 });
