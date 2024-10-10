@@ -34,7 +34,6 @@ describe("Lend book UseCase", function () {
 
     const sut = lendBookUseCase({ lendsRepository, emailService });
     const output = await sut(lendDTO);
-
     expect(output.right).toBeNull();
     expect(lendsRepository.lend).toHaveBeenCalledWith(lendDTO);
     expect(lendsRepository.lend).toHaveBeenCalledTimes(1);

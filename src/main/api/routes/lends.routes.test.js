@@ -106,28 +106,28 @@ describe("Lends Route", function () {
   test("Must return the pending lends", async function () {
     const user = await typeormUsersRepository.save(userDTO);
     const book = await typeormBooksRepository.save(bookDTO);
-
-    const lendDTO = {
-      livro_id: book.id,
-      usuario_id: user.id,
-      data_saida: "2024-03-01",
-      data_retorno: "2024-03-02",
-    };
-
     await typeormLendsRepository.save([
       {
-        ...lendDTO,
+        livro_id: book.id,
+        usuario_id: user.id,
+        data_saida: "2024-03-01",
+        data_retorno: "2024-03-02",
         data_devolucao: "2024-03-02",
       },
-      lendDTO,
+      {
+        livro_id: book.id,
+        usuario_id: user.id,
+        data_saida: "2024-03-01",
+        data_retorno: "2024-03-02",
+      },
     ]);
 
     const { statusCode, body } = await request(app).get("/lend");
 
     expect(statusCode).toBe(200);
     expect(body).toHaveLength(1);
-    expect(body[0].data_retorno).toBe(lendDTO.data_retorno);
-    expect(body[0].data_saida).toBe(lendDTO.data_saida);
+    expect(body[0].data_retorno).toBe("2024-03-02");
+    expect(body[0].data_saida).toBe("2024-03-01");
     expect(body[0].usuario.nome_completo).toBe(user.nome_completo);
     expect(body[0].livro.nome).toBe(book.nome);
   });
