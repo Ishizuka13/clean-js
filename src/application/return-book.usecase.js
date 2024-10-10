@@ -8,7 +8,7 @@ module.exports = function returnBookUseCase({ lendsRepository }) {
     const checkedInputs = emprestimo_id && data_devolucao;
     if (!checkedInputs) throw new AppError(AppError.requiredParams);
 
-    const { data_retorno } = await lendsRepository.return({
+    const { data_retorno } = await lendsRepository.returnedBook({
       emprestimo_id,
       data_devolucao,
     });

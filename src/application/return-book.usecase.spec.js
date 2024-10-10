@@ -3,11 +3,11 @@ const returnBookUseCase = require("./return-book.usecase");
 
 describe("Return book UseCase", function () {
   const lendsRepository = {
-    return: jest.fn(),
+    returnedBook: jest.fn(),
   };
 
   test("Must be able to return a book without fines", async function () {
-    lendsRepository.return.mockResolvedValue({
+    lendsRepository.returnedBook.mockResolvedValue({
       data_retorno: new Date("2024-02-16"),
     });
 
@@ -20,12 +20,12 @@ describe("Return book UseCase", function () {
     const output = await sut(returnBookDTO);
 
     expect(output.right).toBe("Multa por atraso: R$ 0");
-    expect(lendsRepository.return).toHaveBeenCalledWith(returnBookDTO);
-    expect(lendsRepository.return).toHaveBeenCalledTimes(1);
+    expect(lendsRepository.returnedBook).toHaveBeenCalledWith(returnBookDTO);
+    expect(lendsRepository.returnedBook).toHaveBeenCalledTimes(1);
   });
 
   test("Must be able to return a book with fines", async function () {
-    lendsRepository.return.mockResolvedValue({
+    lendsRepository.returnedBook.mockResolvedValue({
       data_retorno: new Date("2024-02-15"),
     });
 
@@ -38,8 +38,8 @@ describe("Return book UseCase", function () {
     const output = await sut(returnBookDTO);
 
     expect(output.right).toBe("Multa por atraso: R$ 10,00");
-    expect(lendsRepository.return).toHaveBeenCalledWith(returnBookDTO);
-    expect(lendsRepository.return).toHaveBeenCalledTimes(1);
+    expect(lendsRepository.returnedBook).toHaveBeenCalledWith(returnBookDTO);
+    expect(lendsRepository.returnedBook).toHaveBeenCalledTimes(1);
   });
 
   test("Must return a throw AppError if lendsRepository is not provided", function () {

@@ -3,7 +3,7 @@ const findBookByNameOrISBNUsecase = require("./find-book-by-name-or-ISBN.usecase
 
 describe("Search books by name or ISBN UseCase", function () {
   const booksRepository = {
-    findBookByNameOrISBN: jest.fn(),
+    findByNameOrISBN: jest.fn(),
   };
 
   test("Must return a valid book when searched by name or ISBN", async function () {
@@ -20,31 +20,31 @@ describe("Search books by name or ISBN UseCase", function () {
         ISBN: "valor_valido",
       },
     ];
-    booksRepository.findBookByNameOrISBN.mockResolvedValue(outputDTO);
+    booksRepository.findByNameOrISBN.mockResolvedValue(outputDTO);
 
     const sut = findBookByNameOrISBNUsecase({ booksRepository });
     const output = await sut(nomeISBNDTO);
 
     expect(output.right).toEqual(outputDTO);
-    expect(booksRepository.findBookByNameOrISBN).toHaveBeenCalledWith(
+    expect(booksRepository.findByNameOrISBN).toHaveBeenCalledWith(
       nomeISBNDTO.valor
     );
-    expect(booksRepository.findBookByNameOrISBN).toHaveBeenCalledTimes(1);
+    expect(booksRepository.findByNameOrISBN).toHaveBeenCalledTimes(1);
   });
 
   test("Must return a null array when the name or ISBN does not exists", async function () {
     const nomeISBNDTO = {
       valor: "valor_nao_cadastrado",
     };
-    booksRepository.findBookByNameOrISBN.mockResolvedValue([]);
+    booksRepository.findByNameOrISBN.mockResolvedValue([]);
     const sut = findBookByNameOrISBNUsecase({ booksRepository });
     const output = await sut(nomeISBNDTO);
 
     expect(output.right).toEqual([]);
-    expect(booksRepository.findBookByNameOrISBN).toHaveBeenCalledWith(
+    expect(booksRepository.findByNameOrISBN).toHaveBeenCalledWith(
       nomeISBNDTO.valor
     );
-    expect(booksRepository.findBookByNameOrISBN).toHaveBeenCalledTimes(1);
+    expect(booksRepository.findByNameOrISBN).toHaveBeenCalledTimes(1);
   });
 
   test("Must return a throw AppError if the booksRepository is not provided", function () {

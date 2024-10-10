@@ -3,9 +3,13 @@ const {
   typeormBooksRepository,
 } = require("../../../infra/db/typeorm/repositories/books.repository");
 const { app } = require("../app");
+const {
+  typeormLendsRepository,
+} = require("../../../infra/db/typeorm/repositories/lends.repository");
 
 describe("Books Routes", function () {
   beforeEach(async function () {
+    await typeormLendsRepository.query("DELETE FROM emprestimos");
     await typeormBooksRepository.query("DELETE FROM livros");
   });
 

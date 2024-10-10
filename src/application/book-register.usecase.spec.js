@@ -50,7 +50,6 @@ describe("Book register UseCase", function () {
 
     const sut = bookRegisterUsecase({ booksRepository });
     const output = await sut(livroDTO);
-    console.log(output);
 
     expect(output.left).toEqual(Either.valueAlreadyRegistered("ISBN"));
     expect(booksRepository.ISBNExists).toHaveBeenCalledWith(livroDTO.ISBN);

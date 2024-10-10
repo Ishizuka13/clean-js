@@ -1,20 +1,20 @@
 const { Either, AppError } = require("../shared/errors");
-const lendBookUseCase = require("./book-lending.usecase");
+const lendBookUseCase = require("./lend-book.usecase");
 
 describe("Lend book UseCase", function () {
   const lendsRepository = {
     lend: jest.fn(),
-    existsPendentUserLendedBookISBN: jest.fn(),
-    findLendedBookWithUserById: jest.fn(),
+    isBookISBNLendPendingUser: jest.fn(),
+    findPendingsByUserId: jest.fn(),
   };
 
   const emailService = {
-    sendEmail: jest.fn(),
+    emailSender: jest.fn(),
   };
 
   test("Must be able to lend a book", async function () {
     lendsRepository.lend.mockReturnValue("qualquer_id");
-    lendsRepository.findLendedBookWithUserById.mockReturnValue({
+    lendsRepository.findPendingsByUserId.mockReturnValue({
       usuario: {
         nome: "qualquer_nome",
         CPF: "qualquer_CPF",
@@ -38,7 +38,7 @@ describe("Lend book UseCase", function () {
     expect(output.right).toBeNull();
     expect(lendsRepository.lend).toHaveBeenCalledWith(lendDTO);
     expect(lendsRepository.lend).toHaveBeenCalledTimes(1);
-    expect(emailService.sendEmail).toHaveBeenCalledWith({
+    expect(emailService.emailSender).toHaveBeenCalledWith({
       data_saida: lendDTO.data_saida,
       data_retorno: lendDTO.data_retorno,
       nome_usuario: "qualquer_nome",
@@ -65,7 +65,7 @@ describe("Lend book UseCase", function () {
   });
 
   test("Must not allow the lending of a book with the same ISBN to the same user before the book has been returned", async function () {
-    lendsRepository.existsPendentUserLendedBookISBN.mockResolvedValue(true);
+    lendsRepository.isBookISBNLendPendingUser.mockResolvedValue(true);
     const lendDTO = {
       livro_id: "qualquer_livro_id",
       usuario_id: "qualquer_usuario_id",
@@ -77,15 +77,11 @@ describe("Lend book UseCase", function () {
     const output = await sut(lendDTO);
 
     expect(output.left).toBe(Either.bookWithISBNIsPendentByUser);
-    expect(
-      lendsRepository.existsPendentUserLendedBookISBN
-    ).toHaveBeenCalledWith({
+    expect(lendsRepository.isBookISBNLendPendingUser).toHaveBeenCalledWith({
       livro_id: lendDTO.livro_id,
       usuario_id: lendDTO.usuario_id,
     });
-    expect(
-      lendsRepository.existsPendentUserLendedBookISBN
-    ).toHaveBeenCalledTimes(1);
+    expect(lendsRepository.isBookISBNLendPendingUser).toHaveBeenCalledTimes(1);
   });
 
   test("Must return a throw AppError if the lendsRepository is not provided", function () {

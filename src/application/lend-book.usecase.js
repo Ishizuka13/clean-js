@@ -3,18 +3,21 @@ const { AppError, Either } = require("../shared/errors");
 module.exports = function lendBookUseCase({ lendsRepository, emailService }) {
   if (!lendsRepository || !emailService)
     throw new AppError(AppError.dependencies);
+
   return async function ({ usuario_id, livro_id, data_retorno, data_saida }) {
     const checkedInputs = usuario_id && livro_id && data_retorno && data_saida;
     if (!checkedInputs) throw new AppError(AppError.requiredParams);
+
     if (data_saida.getTime() > data_retorno.getTime())
       return Either.Left(Either.ReturnDateLowerThanQuitDate);
-    const existsPendentUserLendedBookISBN =
-      await lendsRepository.existsPendentUserLendedBookISBN({
+
+    const isBookISBNLendPendingUser =
+      await lendsRepository.isBookISBNLendPendingUser({
         usuario_id,
         livro_id,
       });
 
-    if (existsPendentUserLendedBookISBN)
+    if (isBookISBNLendPendingUser)
       return Either.Left(Either.bookWithISBNIsPendentByUser);
     const id = await lendsRepository.lend({
       usuario_id,
@@ -23,14 +26,12 @@ module.exports = function lendBookUseCase({ lendsRepository, emailService }) {
       data_saida,
     });
 
-    const { usuario, livro } = await lendsRepository.findLendedBookWithUserById(
-      id
-    );
+    const { usuario, livro } = await lendsRepository.findPendingsByUserId(id);
 
-    await emailService.sendEmail({
+    await emailService.emailSender({
       data_saida,
       data_retorno,
-      nome_usuario: usuario.nome,
+      nome_usuario: usuario.nome_completo,
       CPF: usuario.CPF,
       email: usuario.email,
       nome_livro: livro.nome,

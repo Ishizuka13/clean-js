@@ -1,16 +1,14 @@
 const findPendings = require("../../tests/fixtures/find-pendings");
 const { AppError } = require("../shared/errors");
-const searchLendsUseCase = require("./search-lends.usecase");
+const searchLendsUseCase = require("./find-pending-lends.usecase");
 
 describe("Search Pending Lends UseCase", function () {
   const lendsRepository = {
-    searchPendingsWithBookAndUser: jest.fn(),
+    findPendings: jest.fn(),
   };
 
   test("Must be able to search the pending lends", async function () {
-    lendsRepository.searchPendingsWithBookAndUser.mockResolvedValue(
-      findPendings
-    );
+    lendsRepository.findPendings.mockResolvedValue(findPendings);
 
     const sut = searchLendsUseCase({ lendsRepository });
     const output = await sut();
