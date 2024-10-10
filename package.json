@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node --watch ./src/main/api/server.js",
     "test": "cross-env NODE_ENV=test jest --runInBand",
-    "test:integration": "cross-env NODE_ENV=integration jest --config=jest.integration.js --runInBand"
+    "test:integration": "cross-env NODE_ENV=integration jest --config=jest.integration.js --runInBand",
+    "test:all": "npm test && npm run test:integration"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,7 @@
   "dependencies": {
     "express": "^4.21.0",
     "express-async-errors": "^3.1.1",
+    "nodemailer": "^6.9.15",
     "pg": "^8.13.0",
     "typeorm": "^0.3.20",
     "zod": "^3.23.8"
