@@ -1,6 +1,6 @@
 const { resolve } = require("path");
 const typeorm = require("typeorm");
-const typeormProd = require("./typeorm.prod");
+const typeormProd = require("./typeorm.prod.js");
 
 let typeormServer;
 
@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === "test") {
     entities: [resolve(__dirname, "entities/*.entity-typeorm.js")],
   });
 } else {
-  typeormServer = new typeorm.DataSource(...typeormProd);
+  typeormServer = new typeorm.DataSource(typeormProd);
 }
 
 module.exports = { typeormServer };
