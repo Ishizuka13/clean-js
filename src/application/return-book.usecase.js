@@ -14,7 +14,11 @@ module.exports = function returnBookUseCase({ lendsRepository }) {
     });
 
     const calculateFine = lendEntity.calculateFine({
-      data_retorno,
+      data_retorno: new Date(data_retorno)
+        .toLocaleString()
+        .split(",")[0]
+        .replace("/", "-")
+        .replace("/", "-"),
       data_devolucao,
     });
 

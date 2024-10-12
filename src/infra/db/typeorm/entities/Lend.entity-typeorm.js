@@ -27,19 +27,19 @@ module.exports = new EntitySchema({
     },
   },
   relations: {
-    usuario: {
-      target: "Usuario",
-      type: "many-to-one",
-      joinColumn: {
-        name: "usuario_id",
-        referencedColumnName: "id",
-      },
-    },
     livro: {
       target: "Livro",
       type: "many-to-one",
       joinColumn: {
         name: "livro_id",
+        referencedColumnName: "id",
+      },
+    },
+    usuario: {
+      target: "Usuario",
+      type: "many-to-one",
+      joinColumn: {
+        name: "usuario_id",
         referencedColumnName: "id",
       },
     },

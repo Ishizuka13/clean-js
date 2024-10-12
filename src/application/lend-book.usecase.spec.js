@@ -8,10 +8,6 @@ describe("Lend book UseCase", function () {
     findPendingsByUserId: jest.fn(),
   };
 
-  const emailService = {
-    emailSender: jest.fn(),
-  };
-
   test("Must be able to lend a book", async function () {
     lendsRepository.lend.mockReturnValue("qualquer_id");
     lendsRepository.findPendingsByUserId.mockReturnValue({
@@ -32,19 +28,11 @@ describe("Lend book UseCase", function () {
       data_retorno: new Date("2024-02-16"),
     };
 
-    const sut = lendBookUseCase({ lendsRepository, emailService });
+    const sut = lendBookUseCase({ lendsRepository });
     const output = await sut(lendDTO);
     expect(output.right).toBeNull();
     expect(lendsRepository.lend).toHaveBeenCalledWith(lendDTO);
     expect(lendsRepository.lend).toHaveBeenCalledTimes(1);
-    expect(emailService.emailSender).toHaveBeenCalledWith({
-      data_saida: lendDTO.data_saida,
-      data_retorno: lendDTO.data_retorno,
-      nome_usuario: "qualquer_nome",
-      CPF: "qualquer_CPF",
-      email: "qualquer_email",
-      nome_livro: "qualquer_nome_livro",
-    });
   });
 
   test("Must return an Either.left if return_date is lower than quit_date", async function () {
@@ -55,7 +43,7 @@ describe("Lend book UseCase", function () {
       data_retorno: new Date("2024-02-15"),
     };
 
-    const sut = lendBookUseCase({ lendsRepository, emailService });
+    const sut = lendBookUseCase({ lendsRepository });
     const output = await sut(lendDTO);
 
     expect(output.left).toBe(Either.ReturnDateLowerThanQuitDate);
@@ -72,7 +60,7 @@ describe("Lend book UseCase", function () {
       data_retorno: new Date("2024-02-16"),
     };
 
-    const sut = lendBookUseCase({ lendsRepository, emailService });
+    const sut = lendBookUseCase({ lendsRepository });
     const output = await sut(lendDTO);
 
     expect(output.left).toBe(Either.bookWithISBNIsPendentByUser);
@@ -90,7 +78,7 @@ describe("Lend book UseCase", function () {
   });
 
   test("Must return a throw AppError if a required inputs is not provided", async function () {
-    const sut = lendBookUseCase({ lendsRepository, emailService });
+    const sut = lendBookUseCase({ lendsRepository });
     await expect(() => sut({})).rejects.toThrow(
       new AppError(AppError.requiredParams)
     );

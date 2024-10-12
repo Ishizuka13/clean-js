@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/main/api/server.js",
+    "queue": "nodemon ./src/main/api/queue.js",
     "test": "cross-env NODE_ENV=test jest --runInBand",
     "test:integration": "cross-env NODE_ENV=integration jest --config=jest.integration.js --runInBand",
     "test:all": "npm test && npm run test:integration"
@@ -13,6 +14,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@bull-board/express": "^5.23.0",
+    "bull": "^4.16.3",
+    "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "express-async-errors": "^3.1.1",
     "nodemailer": "^6.9.15",

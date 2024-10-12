@@ -28,5 +28,5 @@ CREATE TABLE "usuarios" (
   CONSTRAINT "CPF" UNIQUE ("CPF"),
   CONSTRAINT "Email" UNIQUE ("email")
 );
-ALTER TABLE "emprestimos" ADD CONSTRAINT "EmprestimosUsuarios" FOREIGN KEY ("usuario_id") REFERENCES "usuarios" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE "emprestimos" ADD CONSTRAINT "EmprestimosLivros" FOREIGN KEY ("livro_id") REFERENCES "livros" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "emprestimos" ADD CONSTRAINT "emprestimosusuarios" FOREIGN KEY ("usuario_id") REFERENCES "usuarios" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "emprestimos" ADD CONSTRAINT "emprestimoslivros" FOREIGN KEY ("livro_id") REFERENCES "livros" ("id") ON DELETE CASCADE ON UPDATE CASCADE;

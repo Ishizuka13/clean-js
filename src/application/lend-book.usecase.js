@@ -1,3 +1,4 @@
+const { sendMailQueue } = require("../infra/queue/bull");
 const { AppError, Either } = require("../shared/errors");
 
 module.exports = function lendBookUseCase({ lendsRepository, emailService }) {
@@ -17,7 +18,7 @@ module.exports = function lendBookUseCase({ lendsRepository, emailService }) {
         livro_id,
       });
 
-    if (isBookISBNLendPendingUser)
+    if (isBookISBNLendPendingUser === true)
       return Either.Left(Either.bookWithISBNIsPendentByUser);
     const id = await lendsRepository.lend({
       usuario_id,
@@ -28,15 +29,12 @@ module.exports = function lendBookUseCase({ lendsRepository, emailService }) {
 
     const { usuario, livro } = await lendsRepository.findPendingsByUserId(id);
 
-    await emailService.emailSender({
-      data_saida,
-      data_retorno,
-      nome_usuario: usuario.nome,
-      CPF: usuario.CPF,
-      email: usuario.email,
-      nome_livro: livro.nome,
+    await sendMailQueue.add({
+      data_saida: data_saida.toLocaleDateString("pt-BR"),
+      data_retorno: data_retorno.toLocaleDateString("pt-BR"),
+      usuario,
+      livro,
     });
-
     return Either.Right(null);
   };
 };

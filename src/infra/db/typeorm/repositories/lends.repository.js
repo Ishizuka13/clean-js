@@ -27,7 +27,6 @@ const lendsRepository = function () {
     const { data_retorno } = await typeormLendsRepository.findOneBy({
       id: emprestimo_id,
     });
-
     return { data_retorno };
   };
 

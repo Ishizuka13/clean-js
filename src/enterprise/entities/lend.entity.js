@@ -10,8 +10,10 @@ const lendsEntity = function () {
     if (!data_devolucao || !data_retorno)
       throw new AppError(AppError.requiredParams);
 
-    const daysLate = calculateDaysLate({ data_retorno, data_devolucao });
-
+    const daysLate = calculateDaysLate({
+      data_retorno,
+      data_devolucao,
+    });
     return `Multa por atraso: R$ ${daysLate > 0 ? "10,00" : "0"}`;
   };
   return { calculateFine };

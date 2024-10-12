@@ -15,12 +15,12 @@ if (process.env.NODE_ENV === "test") {
 } else if (process.env.NODE_ENV === "integration") {
   typeormServer = new typeorm.DataSource({
     type: "postgres",
-    host: "localhost",
+    host: process.env.POSTGRES_HOST,
     database: "biblioteca_test",
     synchronize: true,
-    port: 5432,
-    username: "postgres",
-    password: "123456",
+    port: process.env.POSTGRES_PORT,
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASS,
     entities: [resolve(__dirname, "entities/*.entity-typeorm.js")],
   });
 } else {

@@ -1,5 +1,5 @@
 const lendBookUseCase = require("../../../application/lend-book.usecase");
-const nodemailerService = require("../../../infra/db/email/nodemailer");
+const nodemailerService = require("../../../infra/email/nodemailer");
 const {
   lendsRepository,
 } = require("../../../infra/db/typeorm/repositories/lends.repository");

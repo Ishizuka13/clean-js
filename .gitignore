@@ -2,4 +2,4 @@ package-lock.json
 coverage
 node_modules
 src/infra/db/typeorm/typeorm.prod.js
-
+.env
